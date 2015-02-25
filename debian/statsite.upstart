@@ -1,0 +1,10 @@
+description "C statsd daemon"
+
+start on (local-filesystems and net-device-up IFACE!=lo)
+stop on [!12345]
+
+limit nofile 32768 32768
+
+setuid statsite
+
+exec /usr/bin/statsite -f /etc/statsite.ini

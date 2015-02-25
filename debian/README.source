@@ -1,0 +1,8 @@
+statsite for Debian
+-------------------
+
+bundled dependencies check and libev have been removed from deps/ and Debian's
+packages are used instead during build.
+
+ -- Filippo Giunchedi <filippo@wikimedia.org>  Wed, 25 Feb 2015 10:30:54 +0000
+

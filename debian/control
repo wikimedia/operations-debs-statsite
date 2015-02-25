@@ -1,0 +1,23 @@
+Source: statsite
+Section: utils
+Priority: optional
+Maintainer: Filippo Giunchedi <filippo@wikimedia.org>
+Build-Depends: debhelper (>= 9), dh-systemd, scons, check, libev-dev
+Standards-Version: 3.9.5
+Homepage: https://github.com/armon/statsite
+#Vcs-Git: git://anonscm.debian.org/collab-maint/statsite.git
+#Vcs-Browser: http://anonscm.debian.org/?p=collab-maint/statsite.git;a=summary
+
+Package: statsite
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser
+Recommends: python
+Description: metrics aggregation server
+ Statsite is designed to be both highly performant,
+ and very flexible. To achieve this, it implements the stats
+ collection and aggregation in pure C, using libev to be
+ extremely fast.
+ .
+ This allows it to handle hundreds of connections,
+ and millions of metrics.
+ .

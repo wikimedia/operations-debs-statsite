@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    configure)
+        adduser --quiet --system --no-create-home \
+            --home /var/lib/statsite statsite
+    ;;
+esac
+
+#DEBHELPER#

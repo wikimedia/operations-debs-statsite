@@ -1,0 +1,5 @@
+statsite (0.7.0-1) unstable; urgency=low
+
+  * Initial release (Closes: #778731)
+
+ -- Filippo Giunchedi <filippo@wikimedia.org>  Wed, 25 Feb 2015 10:30:54 +0000

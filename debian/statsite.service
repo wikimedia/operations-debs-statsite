@@ -1,0 +1,9 @@
+[Unit]
+Description=C statsd daemon
+
+[Service]
+User=statsite
+ExecStart=/usr/bin/statsite -f /etc/statsite.ini
+
+[Install]
+WantedBy=multi-user.target
