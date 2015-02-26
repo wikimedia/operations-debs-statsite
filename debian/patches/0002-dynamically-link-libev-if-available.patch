@@ -1,0 +1,57 @@
+From: Filippo Giunchedi <fgiunchedi@wikimedia.org>
+Date: Wed, 25 Feb 2015 23:42:17 +0000
+Subject: dynamically link libev if available
+
+---
+ SConstruct       | 13 +++++++++++--
+ src/networking.c |  5 +++++
+ 2 files changed, 16 insertions(+), 2 deletions(-)
+
+diff --git a/SConstruct b/SConstruct
+index 629880c..4bfeaac 100644
+--- a/SConstruct
++++ b/SConstruct
+@@ -6,8 +6,15 @@ murmur = envmurmur.Library('murmur', Glob("deps/murmurhash/*.c"))
+ envinih = Environment(CPATH = ['deps/inih/'], CFLAGS="-O3")
+ inih = envinih.Library('inih', Glob("deps/inih/*.c"))
+ 
+-env_statsite_with_err = Environment(CCFLAGS = '-g -std=c99 -D_GNU_SOURCE -Wall -Werror -Wstrict-aliasing=0 -O3 -pthread -Ideps/inih/ -Ideps/libev/ -Isrc/')
+-env_statsite_without_err = Environment(CCFLAGS = '-g -std=c99 -D_GNU_SOURCE -O3 -pthread -Ideps/inih/ -Ideps/libev/ -Isrc/')
++ccflags = '-g -std=c99 -D_GNU_SOURCE -O3 -pthread -Ideps/inih/ -Isrc/'
++
++conf_libev = Environment().Configure()
++libev = conf_libev.CheckLibWithHeader('ev', 'ev.h', 'c', autoadd=0)
++if not libev:
++   ccflags += ' -Ideps/libev/ -D_DEPS_LIBEV'
++
++env_statsite_with_err = Environment(CCFLAGS = ccflags + ' -Wall -Wstrict-aliasing=0 -Werror')
++env_statsite_without_err = Environment(CCFLAGS = ccflags)
+ 
+ objs = env_statsite_with_err.Object('src/hashmap', 'src/hashmap.c')           + \
+         env_statsite_with_err.Object('src/heap', 'src/heap.c')                + \
+@@ -25,6 +32,8 @@ objs = env_statsite_with_err.Object('src/hashmap', 'src/hashmap.c')           +
+         env_statsite_without_err.Object('src/conn_handler', 'src/conn_handler.c')
+ 
+ statsite_libs = ["m", "pthread", murmur, inih]
++if libev:
++   statsite_libs.append("ev")
+ if platform.system() == 'Linux':
+    statsite_libs.append("rt")
+ 
+diff --git a/src/networking.c b/src/networking.c
+index 20f720f..498d31d 100644
+--- a/src/networking.c
++++ b/src/networking.c
+@@ -32,7 +32,12 @@
+ #ifdef __MACH__
+ #define EV_USE_KQUEUE 1
+ #endif
++
++#ifdef _DEPS_LIBEV
+ #include "ev.c"
++#else
++#include <ev.h>
++#endif
+ 
+ /**
+  * Default listen backlog size for

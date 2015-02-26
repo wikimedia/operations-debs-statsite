@@ -1,0 +1,25 @@
+From: Filippo Giunchedi <fgiunchedi@wikimedia.org>
+Date: Wed, 25 Feb 2015 23:40:31 +0000
+Subject: add missing includes from ev.c
+
+if including only ev.h these headers are missing
+---
+ src/networking.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/src/networking.c b/src/networking.c
+index dabd2b8..20f720f 100644
+--- a/src/networking.c
++++ b/src/networking.c
+@@ -8,6 +8,11 @@
+ #include <syslog.h>
+ #include <unistd.h>
+ #include <netdb.h>
++#include <string.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <errno.h>
++#include <assert.h>
+ 
+ #include "networking.h"
+ #include "conn_handler.h"
