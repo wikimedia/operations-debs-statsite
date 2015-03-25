@@ -1,3 +1,4 @@
 0001-add-missing-includes-from-ev.c.patch
 0002-dynamically-link-libev-if-available.patch
 0003-provide-libev-multiloop-support.patch
+0004-remove-config.log-on-clean.patch

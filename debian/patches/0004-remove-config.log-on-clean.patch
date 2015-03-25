@@ -1,0 +1,22 @@
+From: Filippo Giunchedi <fgiunchedi@wikimedia.org>
+Date: Wed, 25 Mar 2015 10:41:06 +0000
+Subject: remove config.log on clean
+
+Change-Id: I738dffac6fbb7608bc8a8798a2c2b90958686de9
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index feaab46..96a820a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -4,7 +4,7 @@ build:
+ 	scons statsite
+ 
+ clean:
+-	rm -rfv ./dist ./statsite ./rpm-build
++	rm -rfv ./dist ./statsite ./rpm-build config.log
+ 
+ test_runner:
+ 	scons test_runner
